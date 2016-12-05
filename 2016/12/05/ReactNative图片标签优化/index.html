@@ -1,0 +1,727 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="iCrack's life" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="开胃菜接触react-native到现在，已经1年多了，项目写了不少，最近发现它的一个问题。我们都只对Image标签在引用图片时，分本地和网络两种不同的写法，分别是12345//静态图片&amp;lt;Image source=&amp;#123;require(&amp;apos;./my-icon.png&amp;apos;)&amp;#125; /&amp;gt;//网络图片：&amp;lt;Image source=&amp;#123;&amp;#123;ur">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactNative图片标签优化">
+<meta property="og:url" content="http://yoursite.com/2016/12/05/ReactNative图片标签优化/index.html">
+<meta property="og:site_name" content="iCrack's life">
+<meta property="og:description" content="开胃菜接触react-native到现在，已经1年多了，项目写了不少，最近发现它的一个问题。我们都只对Image标签在引用图片时，分本地和网络两种不同的写法，分别是12345//静态图片&amp;lt;Image source=&amp;#123;require(&amp;apos;./my-icon.png&amp;apos;)&amp;#125; /&amp;gt;//网络图片：&amp;lt;Image source=&amp;#123;&amp;#123;ur">
+<meta property="og:image" content="http://bestinfoods.oss-cn-hangzhou.aliyuncs.com/Mobile%2FreactImage%2Fsource%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="http://bestinfoods.oss-cn-hangzhou.aliyuncs.com/Mobile%2FreactImage%2Fsource%E6%A0%BC%E5%BC%8F2.png">
+<meta property="og:updated_time" content="2016-12-05T05:51:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReactNative图片标签优化">
+<meta name="twitter:description" content="开胃菜接触react-native到现在，已经1年多了，项目写了不少，最近发现它的一个问题。我们都只对Image标签在引用图片时，分本地和网络两种不同的写法，分别是12345//静态图片&amp;lt;Image source=&amp;#123;require(&amp;apos;./my-icon.png&amp;apos;)&amp;#125; /&amp;gt;//网络图片：&amp;lt;Image source=&amp;#123;&amp;#123;ur">
+<meta name="twitter:image" content="http://bestinfoods.oss-cn-hangzhou.aliyuncs.com/Mobile%2FreactImage%2Fsource%E6%A0%BC%E5%BC%8F.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '会飞的虫'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/05/ReactNative图片标签优化/"/>
+
+
+
+
+
+  <title> ReactNative图片标签优化 | iCrack's life </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iCrack's life</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">正在输入....</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/05/ReactNative图片标签优化/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="iCrack">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="iCrack's life">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="iCrack's life" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ReactNative图片标签优化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-05T11:53:21+08:00">
+                2016-12-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/05/ReactNative图片标签优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/05/ReactNative图片标签优化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="开胃菜"><a href="#开胃菜" class="headerlink" title="开胃菜"></a>开胃菜</h2><p>接触react-native到现在，已经1年多了，项目写了不少，最近发现它的一个问题。我们都只对Image标签在引用图片时，分本地和网络两种不同的写法，分别是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//静态图片</div><div class="line">&lt;Image source=&#123;require(&apos;./my-icon.png&apos;)&#125; /&gt;</div><div class="line">//网络图片：</div><div class="line">&lt;Image source=&#123;&#123;uri: &apos;https://facebook.github.io/react/img/logo_og.png&apos;&#125;&#125;</div><div class="line">style=&#123;&#123;width: 400, height: 400&#125;&#125; /&gt;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>但处于混合app开发模式下，可以直接使用uri方式来访问图片，即：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;Image source=&#123;&#123;uri: &apos;app_icon&apos;&#125;&#125; style=&#123;&#123;width: 40, height: 40&#125;&#125; /&gt;</div></pre></td></tr></table></figure></p>
+<p>那么事情很明显了，本地图片其实也可以以uri的形式显示，接下来就来看看具体如何实现。</p>
+<h2 id="看Image资源加载的实现"><a href="#看Image资源加载的实现" class="headerlink" title="看Image资源加载的实现"></a>看Image资源加载的实现</h2><p>找到项目根目录下node_modules/Libraries/Image/，此处是js端对Image调用做的一些处理。包括路径转换，图片属性格式转换，最后对native中封装的Image进行调用。</p>
+<h5 id="第一站：Image-ios-js和Image-android-js"><a href="#第一站：Image-ios-js和Image-android-js" class="headerlink" title="第一站：Image.ios.js和Image.android.js"></a><strong>第一站：</strong>Image.ios.js和Image.android.js</h5><p>Image属性暂时忽略，直接跳到render，定位到this.props.source的使用位置，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">render: function() &#123;</div><div class="line">	//（1）</div><div class="line">	const source = resolveAssetSource(this.props.source) || &#123; uri: undefined, width: undefined, height: undefined &#125;;</div><div class="line"></div><div class="line">	let sources;</div><div class="line">	let style;</div><div class="line">	// (2)</div><div class="line">	if (Array.isArray(source)) &#123;</div><div class="line">		style = flattenStyle([styles.base, this.props.style]) || &#123;&#125;;</div><div class="line">		sources = source;</div><div class="line">	&#125; else &#123;</div><div class="line">		// (3)</div><div class="line">		const &#123;width, height, uri&#125; = source;</div><div class="line">		style = flattenStyle([&#123;width, height&#125;, styles.base, this.props.style]) || &#123;&#125;;</div><div class="line">		sources = [source];</div><div class="line"></div><div class="line">		if (uri === &apos;&apos;) &#123;</div><div class="line">			console.warn(&apos;source.uri should not be an empty string&apos;);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	// (4)</div><div class="line">	const resizeMode = this.props.resizeMode || (style || &#123;&#125;).resizeMode || &apos;cover&apos;; // Workaround for flow bug t7737108</div><div class="line">	const tintColor = (style || &#123;&#125;).tintColor; // Workaround for flow bug t7737108</div><div class="line"></div><div class="line">	// (5)</div><div class="line">	if (this.props.src) &#123;</div><div class="line">		console.warn(&apos;The &lt;Image&gt; component requires a `source` property rather than `src`.&apos;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	return (</div><div class="line">		// (6)</div><div class="line">		&lt;RCTImageView</div><div class="line">			&#123;...this.props&#125;</div><div class="line">			style=&#123;style&#125;</div><div class="line">			resizeMode=&#123;resizeMode&#125;</div><div class="line">			tintColor=&#123;tintColor&#125;</div><div class="line">			source=&#123;sources&#125;</div><div class="line">		/&gt;</div><div class="line">	);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>对this.props.source传入的资源进行了处理，得到的返回值格式如下图。对于resolveAssetSource()函数具体做了什么一会分析<br><strong> 从打包的资源文件中引用: </strong><br><img src="http://bestinfoods.oss-cn-hangzhou.aliyuncs.com/Mobile%2FreactImage%2Fsource%E6%A0%BC%E5%BC%8F.png" alt="从打包的资源文件中引用" title="从打包的资源文件中引用"><br><strong> localhost调试模式: </strong><br><img src="http://bestinfoods.oss-cn-hangzhou.aliyuncs.com/Mobile%2FreactImage%2Fsource%E6%A0%BC%E5%BC%8F2.png" alt="localhost调试模式" title="localhost调试模式"></li>
+<li>当source不是Array时，将Image标签的style和Image.ios.js中定义的styles.base合并。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> styles = StyleSheet.create(&#123;</div><div class="line">	<span class="attr">base</span>: &#123;</div><div class="line">		<span class="attr">overflow</span>: <span class="string">'hidden'</span>,</div><div class="line">	&#125;,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果代码中是这样调用的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Image source=&#123;&#123;uri: &apos;https://facebook.github.io/react/img/logo_og.png&apos;&#125;&#125;</div><div class="line">	style=&#123;&#123;width: 400, height: 400&#125;&#125; /&gt;</div></pre></td></tr></table></figure></p>
+<p>执行flattenStyle之后style为{width:400, height: 400, overflow: ‘hidden’}。</p>
+<blockquote>
+<p><strong> overflow作用: </strong> 设置图片尺寸超过容器可以设置显示或者隐藏(‘visible’,’hidden’)  </p>
+<p>因为看到Array的判断，特意试了一下猜想，发现果然可以以<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Image style=&#123;&#123;width:375, height: 250&#125;&#125; </div><div class="line">	source=&#123;[&#123;uri: &apos;http://file27.mafengwo.net/M00/BE/F4/wKgB6lSKLvSAeR6sAAqbfnNiv8k56.groupinfo.w665_500.jpeg&apos;&#125;]&#125;/&gt;</div></pre></td></tr></table></figure></p>
+<p>这种格式直接调用网络图片，<strong> 注意 </strong>只能是uri形式引进来的图片，require()进来的静态资源图片因为resolveAssetSource函数有要求是会报错的，而以<a href="http://localhost:8081/assets/Images/setting_64px_1194517_easyicon.net.png这种自定义形式（后续会讲到）引进来的静态图片则没有问题" target="_blank" rel="external">http://localhost:8081/assets/Images/setting_64px_1194517_easyicon.net.png这种自定义形式（后续会讲到）引进来的静态图片则没有问题</a> </p>
+</blockquote>
+<ul>
+<li><p>从source中获得宽、高和uri，并将得到的宽高与styles.base、传入的标签style属性合并成新的style。并在uri为空时给出警告。</p>
+</li>
+<li><p>resizeMode的取值，优先级顺序为: 标签中定义 &gt; style中定义 &gt; 默认”cover”.</p>
+</li>
+<li><p>如果图片标签用了src属性，给出警告想，例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;Image src=&quot;http://xxxx.png&quot; /&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>将获得的所有属性值通过RCTImageView传给native，native根据属性值进行Image的绘制。<br>到此Image标签的初步操作讲的差不多，接下来将分析resolveAssetSource()函数做的操作。</p>
+</li>
+</ul>
+<h5 id="第二站：-resolveAssetSource-函数的秘密"><a href="#第二站：-resolveAssetSource-函数的秘密" class="headerlink" title=" 第二站： resolveAssetSource()函数的秘密"></a><strong> 第二站：</strong> resolveAssetSource()函数的秘密</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">* `source` is either a number (opaque type returned by require('./foo.png'))</div><div class="line">* or an `ImageSource` like &#123; uri: '&lt;http location || file path&gt;' &#125;</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">resolveAssetSource</span>(<span class="params">source: any</span>): ?<span class="title">ResolvedAssetSource</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">typeof</span> source === <span class="string">'object'</span>) &#123;</div><div class="line">		<span class="keyword">return</span> source;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">var</span> asset = AssetRegistry.getAssetByID(source);</div><div class="line">	<span class="keyword">if</span> (!asset) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">const</span> resolver = <span class="keyword">new</span> AssetSourceResolver(getDevServerURL(), getBundleSourcePath(), asset);</div><div class="line">	<span class="keyword">if</span> (_customSourceTransformer) &#123;</div><div class="line">		<span class="keyword">return</span> _customSourceTransformer(resolver);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> resolver.defaultAsset();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注释中就首先声明了source的格式，这里做的主要工作是获得图片具体路径，将传入的相对路径转换成绝对路径。</p>
+<h2 id="修改Image-ios-js实现-require-–-gt-uri"><a href="#修改Image-ios-js实现-require-–-gt-uri" class="headerlink" title="修改Image.ios.js实现 require –&gt; uri"></a>修改Image.ios.js实现 require –&gt; uri</h2><p>为了在Image中可以统一的只使用uri，即将require本地图片用uri来完成，我写了如下的函数，将路径转换：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">getImageURL(source) &#123;</div><div class="line">	<span class="keyword">if</span> (!source || !source.uri) <span class="keyword">return</span> source;</div><div class="line"></div><div class="line">	<span class="keyword">var</span> imageURL = source.uri;</div><div class="line">	<span class="keyword">var</span> scriptURL = SourceCode.scriptURL;</div><div class="line">	scriptURL = scriptURL.substring(<span class="number">0</span>, scriptURL.lastIndexOf(<span class="string">'/'</span>) + <span class="number">1</span>)+<span class="string">"assets/"</span>;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (imageURL.match(<span class="regexp">/^http:\/\/.+\..+/i</span>)) &#123;</div><div class="line">		<span class="keyword">return</span> source;</div><div class="line">	&#125;<span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">var</span> strArray = imageURL.split(<span class="string">'/'</span>);</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; strArray.length; i++) &#123;</div><div class="line">			<span class="keyword">if</span>(strArray[i] === <span class="string">'.'</span> || strArray[i] === <span class="string">".."</span>) &#123;<span class="keyword">continue</span>;&#125;</div><div class="line">			i === strArray.length<span class="number">-1</span> ? scriptURL += strArray[i] : scriptURL += strArray[i] + <span class="string">'/'</span>;  </div><div class="line">		&#125;</div><div class="line">		source.uri = scriptURL;</div><div class="line">		<span class="keyword">return</span> source;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>具体代码实现可以在github上找到<br><strong> 地址：</strong><a href="https://github.com/wangasi/react-native-URIImage" target="_blank" rel="external">github地址</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/04/mysql-use/" rel="next" title="mysql use">
+                <i class="fa fa-chevron-left"></i> mysql use
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/05/ReactNative图片标签优化/"
+           data-title="ReactNative图片标签优化" data-url="http://yoursite.com/2016/12/05/ReactNative图片标签优化/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="iCrack" />
+          <p class="site-author-name" itemprop="name">iCrack</p>
+          <p class="site-description motion-element" itemprop="description">个人学习、开发知识点等记录</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wangasi/" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/iCrack007/" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Crack007I/" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开胃菜"><span class="nav-number">1.</span> <span class="nav-text">开胃菜</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#看Image资源加载的实现"><span class="nav-number">2.</span> <span class="nav-text">看Image资源加载的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#第一站：Image-ios-js和Image-android-js"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">第一站：Image.ios.js和Image.android.js</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#第二站：-resolveAssetSource-函数的秘密"><span class="nav-number">2.0.0.2.</span> <span class="nav-text"> 第二站： resolveAssetSource()函数的秘密</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改Image-ios-js实现-require-–-gt-uri"><span class="nav-number">3.</span> <span class="nav-text">修改Image.ios.js实现 require –> uri</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iCrack</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangasi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

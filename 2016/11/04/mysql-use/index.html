@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="flex,前端," />
+  <meta name="keywords" content="mysql,数据库," />
 
 
 
@@ -86,35 +86,28 @@
 
 
 
-<meta name="description" content="flex基本css样式与使用场景的记录
-justify-content – 水平布局* flex-start（默认值）: 左对齐
-* flex-end: 右对齐
-* center: 居中
-* space-between: 两端对齐，项目之间的间隔都相等。
-* space-around: 每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。">
+<meta name="description" content="数据库基础知识数据库概念
+外键：为某个表中的一列，它包含另一个表的主键值，定义了两个表之间的关系。
+笛卡尔积：由没有联结条件的表关系返回的结果为笛卡尔积。检索出的行的数目将是第一个表中的行数乘以第二个表中的行数。
+联结的性能：Mysql在运行时关联指定的每个表以处理联结，这种处理可能是非常耗费资源的，因此不要联结不必要的表，联结的表越多，性能下降越厉害。
+自然联结： 排除多次出现，使每个列只返回一">
 <meta property="og:type" content="article">
-<meta property="og:title" content="flex">
-<meta property="og:url" content="http://yoursite.com/2016/06/22/flex/index.html">
+<meta property="og:title" content="mysql use">
+<meta property="og:url" content="http://yoursite.com/2016/11/04/mysql-use/index.html">
 <meta property="og:site_name" content="iCrack's life">
-<meta property="og:description" content="flex基本css样式与使用场景的记录
-justify-content – 水平布局* flex-start（默认值）: 左对齐
-* flex-end: 右对齐
-* center: 居中
-* space-between: 两端对齐，项目之间的间隔都相等。
-* space-around: 每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。">
-<meta property="og:image" content="https://wt-prj.oss.aliyuncs.com/6f7e193a1b744700a5168a16ec407dd0/831efb89-874e-4ba8-ac99-bae5fe6da9d5.png">
-<meta property="og:image" content="https://wt-prj.oss.aliyuncs.com/6f7e193a1b744700a5168a16ec407dd0/a7b1e2d0-a603-4216-8918-4d9657b8a349.png">
-<meta property="og:image" content="https://wt-prj.oss.aliyuncs.com/6f7e193a1b744700a5168a16ec407dd0/c1167c1d-a616-4456-beb7-510a94750d76.png">
-<meta property="og:updated_time" content="2016-12-05T03:29:02.000Z">
+<meta property="og:description" content="数据库基础知识数据库概念
+外键：为某个表中的一列，它包含另一个表的主键值，定义了两个表之间的关系。
+笛卡尔积：由没有联结条件的表关系返回的结果为笛卡尔积。检索出的行的数目将是第一个表中的行数乘以第二个表中的行数。
+联结的性能：Mysql在运行时关联指定的每个表以处理联结，这种处理可能是非常耗费资源的，因此不要联结不必要的表，联结的表越多，性能下降越厉害。
+自然联结： 排除多次出现，使每个列只返回一">
+<meta property="og:updated_time" content="2016-12-05T03:50:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="flex">
-<meta name="twitter:description" content="flex基本css样式与使用场景的记录
-justify-content – 水平布局* flex-start（默认值）: 左对齐
-* flex-end: 右对齐
-* center: 居中
-* space-between: 两端对齐，项目之间的间隔都相等。
-* space-around: 每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。">
-<meta name="twitter:image" content="https://wt-prj.oss.aliyuncs.com/6f7e193a1b744700a5168a16ec407dd0/831efb89-874e-4ba8-ac99-bae5fe6da9d5.png">
+<meta name="twitter:title" content="mysql use">
+<meta name="twitter:description" content="数据库基础知识数据库概念
+外键：为某个表中的一列，它包含另一个表的主键值，定义了两个表之间的关系。
+笛卡尔积：由没有联结条件的表关系返回的结果为笛卡尔积。检索出的行的数目将是第一个表中的行数乘以第二个表中的行数。
+联结的性能：Mysql在运行时关联指定的每个表以处理联结，这种处理可能是非常耗费资源的，因此不要联结不必要的表，联结的表越多，性能下降越厉害。
+自然联结： 排除多次出现，使每个列只返回一">
 
 
 
@@ -142,13 +135,13 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/06/22/flex/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/11/04/mysql-use/"/>
 
 
 
 
 
-  <title> flex | iCrack's life </title>
+  <title> mysql use | iCrack's life </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -269,7 +262,7 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/22/flex/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/04/mysql-use/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="iCrack">
@@ -293,7 +286,7 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
             
             
               
-                flex
+                mysql use
               
             
           </h1>
@@ -306,8 +299,8 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-22T14:48:02+08:00">
-                2016-06-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-04T14:40:25+08:00">
+                2016-11-04
               </time>
             
 
@@ -325,8 +318,8 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
                   </a>
                 </span>
 
@@ -340,8 +333,8 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/06/22/flex/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/22/flex/" itemprop="commentCount"></span>
+                <a href="/2016/11/04/mysql-use/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/04/mysql-use/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -367,36 +360,104 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
       
 
       
-        <p>flex基本css样式与使用场景的记录</p>
-<h2 id="justify-content-–-水平布局"><a href="#justify-content-–-水平布局" class="headerlink" title="justify-content – 水平布局"></a>justify-content – 水平布局</h2><pre><code>* flex-start（默认值）: 左对齐
-* flex-end: 右对齐
-* center: 居中
-* space-between: 两端对齐，项目之间的间隔都相等。
-* space-around: 每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
-</code></pre><a id="more"></a>
-<h2 id="align-items-–-垂直布局"><a href="#align-items-–-垂直布局" class="headerlink" title="align-items – 垂直布局"></a>align-items – 垂直布局</h2><pre><code>* flex-start: 交叉轴的起点对齐。
-* flex-end: 交叉轴的终点对齐。
-* center: 交叉轴的中点对齐。
-* baseline: 项目的第一行文字的基线对齐。
-* stretch（默认值）: 如果项目未设置高度或设为auto，将占满整个容器的高度。
-</code></pre><h2 id="flex-direction-–-项目的排列方向"><a href="#flex-direction-–-项目的排列方向" class="headerlink" title="flex-direction – 项目的排列方向"></a>flex-direction – 项目的排列方向</h2><pre><code>* row（默认值）: 主轴为水平方向，起点在左端。
-* row-reverse: 主轴为水平方向，起点在右端。
-* column: 主轴为垂直方向，起点在上沿。
-* column-reverse: 主轴为垂直方向，起点在下沿。
-</code></pre><h2 id="order-–-单个元素的排序"><a href="#order-–-单个元素的排序" class="headerlink" title="order – 单个元素的排序"></a>order – 单个元素的排序</h2><pre><code>元素的属性默认值为0，但是我们设置这个属性为正数或负数。
-</code></pre><p><img src="https://wt-prj.oss.aliyuncs.com/6f7e193a1b744700a5168a16ec407dd0/831efb89-874e-4ba8-ac99-bae5fe6da9d5.png" alt="原样式" height="260" width="400"><br><img src="https://wt-prj.oss.aliyuncs.com/6f7e193a1b744700a5168a16ec407dd0/a7b1e2d0-a603-4216-8918-4d9657b8a349.png" alt="后样式" height="260" width="400"><br>将红色的青蛙从3移到1<br><img src="https://wt-prj.oss.aliyuncs.com/6f7e193a1b744700a5168a16ec407dd0/c1167c1d-a616-4456-beb7-510a94750d76.png" alt="代码" height="260" width="400"></p>
-<h2 id="align-self-–-控制单个元素"><a href="#align-self-–-控制单个元素" class="headerlink" title="align-self – 控制单个元素"></a>align-self – 控制单个元素</h2><pre><code>align-self属性接受和align-items一样的那些值。
-</code></pre><h2 id="flex-wrap-–-分散布局"><a href="#flex-wrap-–-分散布局" class="headerlink" title="flex-wrap – 分散布局"></a>flex-wrap – 分散布局</h2><pre><code>* nowrap: 所有的元素都在一行。
-* wrap: 元素自动换成多行。
-* wrap-reverse: 元素自动换成逆序的多行
-</code></pre><h2 id="flex-direction和flex-wrap一起使用时缩写flex-flow"><a href="#flex-direction和flex-wrap一起使用时缩写flex-flow" class="headerlink" title="flex-direction和flex-wrap一起使用时缩写flex-flow"></a>flex-direction和flex-wrap一起使用时缩写flex-flow</h2><pre><code>可以用flex-flow: row wrap
-</code></pre><h2 id="align-content-–-决定行与行之间间隔多远"><a href="#align-content-–-决定行与行之间间隔多远" class="headerlink" title="align-content – 决定行与行之间间隔多远"></a>align-content – 决定行与行之间间隔多远</h2><pre><code>* flex-start: 多行都集中在顶部。
-* flex-end: 多行都集中在底部。
-* center: 多行居中。
-* space-between: 行与行之间保持相等距离。
-* space-around: 每行的周围保持相等距离。
-* stretch: 每一行都被拉伸以填满容器。
-</code></pre><p>最后放一个练习flex用的有趣网站： <a href="http://flexboxfroggy.com/#zh-cn" target="_blank" rel="external">http://flexboxfroggy.com/#zh-cn</a></p>
+        <h2 id="数据库基础知识"><a href="#数据库基础知识" class="headerlink" title="数据库基础知识"></a>数据库基础知识</h2><h3 id="数据库概念"><a href="#数据库概念" class="headerlink" title="数据库概念"></a>数据库概念</h3><ul>
+<li>外键：为某个表中的一列，它包含另一个表的主键值，定义了两个表之间的关系。</li>
+<li>笛卡尔积：由没有联结条件的表关系返回的结果为笛卡尔积。检索出的行的数目将是第一个表中的行数乘以第二个表中的行数。</li>
+<li>联结的性能：Mysql在运行时关联指定的每个表以处理联结，这种处理可能是非常耗费资源的，因此不要联结不必要的表，联结的表越多，性能下降越厉害。</li>
+<li>自然联结： 排除多次出现，使每个列只返回一次。</li>
+<li>外部联结： 相关表中没有关联的行。</li>
+<li>InnoDB是一个可靠的事务处理引擎，不支持全文本搜索。</li>
+<li>MEMORY在功能等同于MyISAM,但由于数据存储在内存中，速度很快。</li>
+<li>MyISAM是一个性能极高的引擎，支持全文本搜索，但不支持事务处理。<a id="more"></a></li>
+<li>视图的优点：<ol>
+<li>重用SQL的语句。</li>
+<li>简化复杂的SQL操作，在编写查询后，可以方便的重用它而不必知道它的基本查询细节。</li>
+<li>使用表的组成部分而不是整个表。</li>
+<li>保护数据。可以给用户授予表的特定部分的访问权限而不是表的访问权限。</li>
+<li>更改数据格式和表示。视图可返回与底层表的表示和格式不同的数据。</li>
+</ol>
+</li>
+<li>如果MYSQL不能正确的确定被更新的基数据，则不允许更新。视图不能更新的情况：<ol>
+<li>分组(使用GROUP BY 和 HAVING)</li>
+<li>联结</li>
+<li>并</li>
+<li>聚集函数(Min()、Count()、Sum()等)</li>
+<li>DISTINCT </li>
+<li>导出(计算)列</li>
+</ol>
+</li>
+</ul>
+<h3 id="数据库常用指令"><a href="#数据库常用指令" class="headerlink" title="数据库常用指令"></a>数据库常用指令</h3><ul>
+<li>登录到DBMS mysql -u user_name -p  -h localhost -P 3306</li>
+<li>使用表 USE crashcourse;</li>
+<li>SHOW DATABASES;  查看数据库</li>
+<li>SHOW TABLES;  获得数据库内所有表</li>
+<li>SHOW COLUMNS FROM customers; 显示数据库内表列</li>
+<li>DESCRIBE customers; 功能同上</li>
+<li>SHOW STATUS; 显示广泛的服务器状态信息</li>
+<li>SHOW CREATE DATABASE; 和 SHOW CREATE TABLE; 显示创建特定数据库或表</li>
+<li>SHOW GRANTS; 显示授予用户的安全权限</li>
+<li>SHOW ERRORS; 和 SHOW WARNINGS; 显示服务器错误或警告消息</li>
+<li>INFORMATION_SCHEMA; 获得和过滤模式信息</li>
+<li>SELECT * FROM customers; 检索所有列</li>
+<li>SELECT DISTINCT vend_id FROM products; 过滤掉重复数据，只返回id不同的行<br>  <strong> 备注： </strong> DISTINCT关键字应用于所有列而不仅是前置它的列</li>
+<li>LIMIT 限制返回结果。<ol>
+<li>SELECT prod_name FROM products LIMIT 5; 指示返回结果不多于5行</li>
+<li>SELECT prod_name FROM products LIMIT 3, 4; 返回从行3开始的4行  == LIMIT 4 OFFSET 3<br><strong> 备注： </strong> 1）检索出来的第一行为0而不是1。2) 在行数不够时，返回能返回的行数。</li>
+</ol>
+</li>
+<li>ORDER BY对输出进行排序。<ol>
+<li>SELECT prod_name FROM products ORDER BY prod_name;</li>
+<li>SELECT prod_id, prod_price, prod_name FROM products ORDER BY prod_price, prod_name; 先按价格，再按名称排序。</li>
+<li>DESC 降序排序。SELECT prod_name FROM products ORDER BY prod_name DESC;</li>
+<li>SELECT prod_id, prod_price, prod_name FROM products ORDER BY prod_price DESC, prod_name; 以降序排序产品，再对产品名排序。<br><strong> 备注： </strong> DESC关键字只应用到直接位于其前面的列名。ASC升序，默认。</li>
+<li>SELECT prod_price FROM BY prod_price LIMIT 1; 找出一个列中最高或最低的值。</li>
+</ol>
+</li>
+<li>WHERE 搜索指定条件<ol>
+<li>SELECT prod_name, prod_price FROM products WHERE prod_price=2.50; 只返回价格为2.50的行. —&gt; 相等测试，检查一个列是否具有指定的值，以此过滤。</li>
+<li>SELECT prod_name, prod_price FROM products WHERE prod_price BETWEEN 5 AND 10;</li>
+<li>SELECT prod_name FROM products WHERE prod_price IS NULL;</li>
+<li>AND 和 OR 用来表示检索匹配满足所有条件的行 和 任一条件的行。<br> SELECT prod_name FROM products WHERE vend_id = 1002 OR vend_id = 124;</li>
+<li>SELECT prod_name FROM products WHERE vend_id IN (1002,1003);</li>
+<li>SELECT prod_name FROM products WHERE vend_id NOT IN (1002,1003);</li>
+</ol>
+</li>
+<li>通配符过滤,LIKE<ol>
+<li>(%)通配符，表示任何字符出现任意次数。<br> SELECT prod_id, prod_name FROM products WHERE prod_name LIKE ‘jet%’; 搜索jet开头的词。</li>
+<li>(_)通配符，只匹配单个字符。</li>
+<li>通配符搜索的处理比上述搜索花时间多。</li>
+<li>LIKE 匹配整个列，如果被匹配的文本仅在列值中出现，like将不会匹配。</li>
+</ol>
+</li>
+<li>正则表达式匹配<ol>
+<li>SELECT prod_name FROM products WHERE prod_name REGEXP ‘.000’; 匹配含有000的值</li>
+</ol>
+</li>
+<li>concat()拼接串。SELECT Concat(vend_name, ‘(‘, vend_country,’)’) FROM vendors ORDER BY wend_name;</li>
+<li>RTrim()去掉值右边的所有空格。LTrim()去掉值左边的空格，Trim()去掉串两边的空格。</li>
+<li>AS 一个字段或列的别名。</li>
+<li>数据处理函数。<br>  1.upper()，将字母转换为大写。<br>  2.SOUNDEX(), 将任何文本转换为描述其语音表示的字母数字模式的算法</li>
+<li>WHERE过滤指定是行，HAVING过滤分组。</li>
+<li><p>GROUP BY和ORDER BY的区别<br>|          ORDER BY        |                      GROUP BY                        |<br>| ——————— | ————————————————- |<br>| 排序产生的输出任意列都可     | 分组行。但输出可能不是分组的顺序                          |<br>| 以使用(甚至非选择的列也    | 只可能使用选择列或表达式列，而且必须使用每个选择列表达式      |<br>| 可以使用)不一定需要          | 如果与聚集函数一起使用列(或表达式)，则必须使用                |    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">1. select order_num, sum(quantity*item_price) as ordertotal </div><div class="line">	from orderitems </div><div class="line">	group by order_num </div><div class="line">	having sum(quantity*item_price) &gt;= 50</div><div class="line"></div><div class="line">2. 	select order_num, sum(quantity*item_price) as ordertotal </div><div class="line">	from orderitems </div><div class="line">	group by order_num </div><div class="line">	having sum(quantity*item_price) &gt;= 50</div><div class="line">	order by ordertotal</div></pre></td></tr></table></figure>
+<blockquote>
+<p>group by子句用来按订单号分组数据，以便sum(*)函数能够返回总计订单价格。having子句过滤数据，使得只返回总计订单价格大于等于50的订单。</p>
+</blockquote>
+</li>
+<li>select子句顺序：select &gt; from &gt; where &gt; group by &gt; having &gt; order by &gt; limit</li>
+<li>fulltext：在创建表时启用全文本搜索，给出被索引列的一个逗号分隔的列表。</li>
+<li><p>Match()和Against()执行全文本搜索，Match()指定被搜索的列，Against()指定要使用的搜索表达式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT note_text</div><div class="line">FROM productnotes</div><div class="line">WHERE Match(note_text) Against(&apos;rabbit&apos;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>ALTER TABLE更改表结构。</p>
+<ol>
+<li>ALTER TABLE vendors ADD vend_phone CHAR(20);</li>
+<li>ALTER TABLE vendors DROP COLUMN vend_phone;</li>
+<li>ALTER TABLE orderitems<br>ADD CONSTRAINT fk_orderitems_orders<br>FOREIGN KEY (order_num) REFERENCES orders (order_num);</li>
+</ol>
+</li>
+</ul>
 
       
     </div>
@@ -420,9 +481,9 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
       
         <div class="post-tags">
           
-            <a href="/tags/flex/" rel="tag"># flex</a>
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
           
-            <a href="/tags/前端/" rel="tag"># 前端</a>
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
           
         </div>
       
@@ -431,14 +492,18 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/10/18/系统调度能否达到微秒级/" rel="next" title="系统调度能否达到微秒级">
+                <i class="fa fa-chevron-left"></i> 系统调度能否达到微秒级
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/07/15/Assert-and-NSLog在项目中的应用/" rel="prev" title="Assert and NSLog在项目中的应用">
-                Assert and NSLog在项目中的应用 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/05/ReactNative图片标签优化/" rel="prev" title="ReactNative图片标签优化">
+                ReactNative图片标签优化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -465,8 +530,8 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/22/flex/"
-           data-title="flex" data-url="http://yoursite.com/2016/06/22/flex/">
+      <div class="ds-thread" data-thread-key="2016/11/04/mysql-use/"
+           data-title="mysql use" data-url="http://yoursite.com/2016/11/04/mysql-use/">
       </div>
     
   </div>
@@ -511,7 +576,7 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -519,7 +584,7 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -528,7 +593,7 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -599,7 +664,7 @@ justify-content – 水平布局* flex-start（默认值）: 左对齐
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#justify-content-–-水平布局"><span class="nav-number">1.</span> <span class="nav-text">justify-content – 水平布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#align-items-–-垂直布局"><span class="nav-number">2.</span> <span class="nav-text">align-items – 垂直布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flex-direction-–-项目的排列方向"><span class="nav-number">3.</span> <span class="nav-text">flex-direction – 项目的排列方向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#order-–-单个元素的排序"><span class="nav-number">4.</span> <span class="nav-text">order – 单个元素的排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#align-self-–-控制单个元素"><span class="nav-number">5.</span> <span class="nav-text">align-self – 控制单个元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flex-wrap-–-分散布局"><span class="nav-number">6.</span> <span class="nav-text">flex-wrap – 分散布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flex-direction和flex-wrap一起使用时缩写flex-flow"><span class="nav-number">7.</span> <span class="nav-text">flex-direction和flex-wrap一起使用时缩写flex-flow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#align-content-–-决定行与行之间间隔多远"><span class="nav-number">8.</span> <span class="nav-text">align-content – 决定行与行之间间隔多远</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库基础知识"><span class="nav-number">1.</span> <span class="nav-text">数据库基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库概念"><span class="nav-number">1.1.</span> <span class="nav-text">数据库概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库常用指令"><span class="nav-number">1.2.</span> <span class="nav-text">数据库常用指令</span></a></li></ol></li></ol></div>
             
 
           </div>
