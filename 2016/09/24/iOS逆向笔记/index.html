@@ -1,0 +1,754 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS逆向," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="iCrack's life" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="逆向基础知识1、文件目录1）操作系统目录（多用于底层）a. /: 根目录b. /bin 存放提供用户级基础功能的二进制文件，如ls.ps等。c. /boot 存放能使系统成功启动的所有文件。d. /dev 存放BSD设备文件。每个文件代表系统的一个块设备或字符设备。e. /sbin 存放提供系统级基础功能的二进制文件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS逆向笔记">
+<meta property="og:url" content="http://yoursite.com/2016/09/24/iOS逆向笔记/index.html">
+<meta property="og:site_name" content="iCrack's life">
+<meta property="og:description" content="逆向基础知识1、文件目录1）操作系统目录（多用于底层）a. /: 根目录b. /bin 存放提供用户级基础功能的二进制文件，如ls.ps等。c. /boot 存放能使系统成功启动的所有文件。d. /dev 存放BSD设备文件。每个文件代表系统的一个块设备或字符设备。e. /sbin 存放提供系统级基础功能的二进制文件。">
+<meta property="og:updated_time" content="2016-12-05T03:21:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS逆向笔记">
+<meta name="twitter:description" content="逆向基础知识1、文件目录1）操作系统目录（多用于底层）a. /: 根目录b. /bin 存放提供用户级基础功能的二进制文件，如ls.ps等。c. /boot 存放能使系统成功启动的所有文件。d. /dev 存放BSD设备文件。每个文件代表系统的一个块设备或字符设备。e. /sbin 存放提供系统级基础功能的二进制文件。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '会飞的虫'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/24/iOS逆向笔记/"/>
+
+
+
+
+
+  <title> iOS逆向笔记 | iCrack's life </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iCrack's life</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">正在输入....</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/24/iOS逆向笔记/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="iCrack">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="iCrack's life">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="iCrack's life" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS逆向笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-24T21:05:13+08:00">
+                2016-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS逆向/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS逆向</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/09/24/iOS逆向笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/24/iOS逆向笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="逆向基础知识"><a href="#逆向基础知识" class="headerlink" title="逆向基础知识"></a>逆向基础知识</h2><p>1、文件目录<br>1）操作系统目录（多用于底层）<br>a. /: 根目录<br>b. /bin 存放提供用户级基础功能的二进制文件，如ls.ps等。<br>c. /boot 存放能使系统成功启动的所有文件。<br>d. /dev 存放BSD设备文件。每个文件代表系统的一个块设备或字符设备。<br>e. /sbin 存放提供系统级基础功能的二进制文件。<br><a id="more"></a><br>f. /etc 存放系统脚本及配置文件，如password、hosts等。<br>g. /lib 存放系统库文件、内核模块及设备驱动等。<br>h. /mnt 存放临时的文件系统挂载点。<br>i. /private 存放两个目录，分别是/private/etc和/private/var。<br>j. /tmp 临时目录。<br>k. /usr 包含了大多数用户工具和程序。/usr/bin包含那些/bin和/sbin中未出现的基础功能，如nm,killall等；<br>、usr/include包含所有的标准C头文件；/usr/lib存放库文件。<br>l. /var 存放经常更改的文件，如日志、用户数据、临时文件等。/var/mobile和/var/root分别存放了mobile用户<br>和root用户的文件，是重点关注的目录。/var/mobile/Library/SMS下存放短信数据库；/var/mobile/Library/Mail<br>下存放邮件数据<br>2）文件目录<br>a. /Applications/ 目录存放系统App和从Cydia下载的App。<br>b. /Developer 如果一台设备连接Xcode后被指定为调试用机，Xcode就会在iOS中生成这个目录。其中<br>会含有一些调试需要的工具和数据。<br>c. /Library 存放一些提供系统支持的数据。/Library/MobileSubstrate下存放了所有基于CydiaSubstrate的插件。<br>d. /System/Library 存放大量系统组件。/System/Library/Frameworks和/System/Library/PrivateFrameworks<br>存放iOS中的各种framework.<br>e. /User 用户目录，实际指向/var/mobile。<br>f. /var/mobile/containers/ 目录存放的则是StoreApp。<br>g. /var/mobile/containers/Data App对应的Documents目录。/var/mobile/Media/DCIM下存放照片；<br>/var/mobile/Media/Recordings下存放录音文件</p>
+<p>2、daemon 守护进程<br>1）daemon主要有一个可执行文件和一个plist文件组成。<br>2）iOS的根进程launchd会在开机时检查/System/Library/LaunchDaemons和/Library/LaunchDaemons下所有格式<br>符合规定的plist文件，然后启动对应daemon。</p>
+<p>3、class-dump的使用<br>1）把要dump的App拷贝到OSX中。<br>2）在Terminal中进入App所在的目录。<br>3）class-dump -S -s -H SMSNinja -o /Desktop/SMSNinja/</p>
+<p>4、Logos语法<br>5、Reveal<br>1)在iPhone上安装Reveal Loader.<br>2)在settings应用中会出现Reveal，在其中配置要调试的应用。<br>6、dyld_decache<br>1) 用于提取/System/Library/Caches/com.apple.dyld/目录下的frameworks.<br>2) 只支持32位<br>7、CydiaSubstrate由MobileHooker,MobileLoader和Safe mode组成。<br>8、Cycript<br>9、LLDB与debugserver<br>一、配置debugserver环境<br>1）debugserver只有在设备连接过一次Xcode后，并在window-&gt;devices菜单中添加次设备后，debugserver才会被<br>Xcode安装到iOS的/Developer/usr/bin/目录下。<br>2) 将debugserver从iOS拷贝到OSX的/user/iCrack/目录下。<br>3) lipo -thin arm64 ~/debugserver -output ~/debugserver<br>4) 下载<a href="http://iosre.com/ent.xml到OSX的/User/iCrack/目录下。" target="_blank" rel="external">http://iosre.com/ent.xml到OSX的/User/iCrack/目录下。</a><br>5）运行/opt/theos/bin/ldid -Sent.xml debugserver<br>6) scp ~/debugserver root@iOSIP:/usr/bin/debugserver<br>7) ssh root@iOSIP<br>8) chmod +x /usr/bin/debugserver<br>二、用debugserver启动或附加进程<br>1) debugserver  IP:port /path/to/executable,如：<br>debugserver -x backboard *:1234 -a /Applications/MobileSMS.app/MobileSMS<br>上述代码会启动MobileSMS,并开启1234端口，等待任意IP地址的LLDB接入。<br>debugserver 192.168.1.103:1234 -a “Calculator” 附加进程<br>2) 启动lldb：在终端输入指令/Applications/Xcode.app/Contents/Developer/usr/bin/lldb<br>输入process connect connect://192.168.1.107:1234进行连接<br>3) image list -o -f 列举当前进程中的所有模块。<br>4）breakpoint<br>a. b function 在函数的起始位置设置断点，如：b NSLog<br>b. br s -a address 在地址处设置断点，如：br s -a 0xCCCCC<br>c. br s -a ‘ASLROffset+address’<br>d. c 让程序继续运行。<br>e. br dis 禁用断点，如：br disable 6，6为断点序号。<br>f. br en 启用断点<br>g. br del 删除断点<br>h. br com add 1 指定某个断点得到触发的时候，执行预先设置的指令。执行后，LLDB会要求我们设置一系列指令，以“DONE”结束。<br>i. ni(nexti) 执行此条指令,不进入函数体。stepi也是执行下一条机器码，但进入函数体。<br>j. print 打印值，如：p $r1<br>k. po 打印Object-c对象，如：po [$r0 class]<br>l. x 打印一个地址处存放的值，如：p/x $sp,以十六进制方式打印sp,是一个指针, x/10 $sp打印了这个指针指向的连续10个字的数据。<br>m. register write 命令用于给指定的寄存器赋值，从而对程序进行改动，观察程序的执行过程有什么变化。register write r0 1<br>n. 回车键，重复执行上一条指令。</p>
+<p>10、dumpdecrypted<br>1) ps -e 查找app存放位置<br>2）cycript -p TargetApp       [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectoryinDomains:NSUserDomainMask][0]找到documents目录<br>3) DYLD_INSERT_LIBRARIES=/path/to/dumpdecrypted.dylib/path/to/executable</p>
+<p>1) 将dumpdecrypted.dylib放到/var/mobile/Containers/Data/Application/XXXXX-XXXX/Documents/目录下<br>2）然后进入目录<br>3）执行DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib /var/mobile/Containers/Bundle/Application/D76DFE82-521F-458A-A62A-63EF9F21FBE3/WeChat.app/WeChat。<br>4) 目录下生成的WeChat.decrypted及去壳后的文件。<br>11、ssh<br>1）ssh user@iOSIP,如：ssh root@172.16.20.106<br>2) 拷贝文件从本地到iOS,scp /path/to/localFile user@iOSIP:/path/to/remoteFile,<br>如：scp ~/test.png root@172.16.20.106:/var/tmp/<br>3) 默认登录密码：alpine，修改密码：passwd root或者passwd mobile<br>12、usbmuxd<br>13、syslogd to/var/log/syslog<br>1) syslog是iOS中记录系统日志的守护进程。<br>2）cat /dev/null &gt; /var/log/syslog 清空log<br>14、定位目标文件<br>1）基于CydiaSubstrate的dylib全部位于 /Library/MobileSubstrate/DynamicLibraries/<br>2）bundle分为App和framework，appstore app全部位于：/var/mobile/Containers/Bundle/Application/下，<br>framework全部位于：/System/Library/Frameworks<br>3）daemon的配置文件位于：/System/Library/LaunchDaemons/、/Library/Daemons/或/Library/LaunchAgents/下.<br>4）grep能够搜索文件中是否含有给定的正则表达式。如：grep -r 需要查找的内容 目录<br>5）SBSettings toggle的编写规范：<a href="http://thebigboss.org/guides-iphone-ipod-ipad/sbsettings-toggle-spec" target="_blank" rel="external">http://thebigboss.org/guides-iphone-ipod-ipad/sbsettings-toggle-spec</a></p>
+<h2 id="常用指令："><a href="#常用指令：" class="headerlink" title="常用指令："></a>常用指令：</h2><pre><code>class-dump -H /Users/iCrack/Desktop/WeChat.decrypted -o /Users/iCrack/Desktop/wechatHeader
+ssh root@iOSIP
+cycript退出 control+D
+</code></pre><h2 id="arm64汇编指令："><a href="#arm64汇编指令：" class="headerlink" title="arm64汇编指令："></a>arm64汇编指令：</h2><ol>
+<li>ldr r0, _start 从内存地址_start的地方把值读入。绝对地址</li>
+<li>adr r0, _start 取得_start的地址到r0，相对位置。</li>
+<li>通过 B BL BLX BX 可以完成在当前指令向前或者向后32MB的地址空间的跳转</li>
+<li>b 是最简单的跳转指令。要注意的是，跳转指令的实际值不是绝对地址，而是相对地址——是相对当前PC值的一个偏移量，它的值由汇编器计算得出。</li>
+<li>bl 非常常用。它在跳转之前会在寄存器LR(R14)中保存PC的当前内容。</li>
+</ol>
+<hr>
+<h2 id="A64的新功能"><a href="#A64的新功能" class="headerlink" title="A64的新功能"></a>A64的新功能</h2><ol>
+<li>A64指令 提供同A32和T32指令类似的功能， 也提供如下新功能<ol>
+<li>一个清晰的，固定长度的指令集： 指令是32位宽度， 寄存器字段（fields）是 在固定位置的 连续的位，立即数 通常也是占用连续的位</li>
+<li>更多通用寄存器(r0-r30), 每个寄存器长度扩展为64位。 通用寄存器 编码在5个位域</li>
+<li>寄存器r31是一个特殊的寄存器：<ul>
+<li>Zero Register: 在大多数情况下，作为源寄存器使用时， r31读出来的值 是0; 作为目标寄存器使用时， 丢弃结果。   WZR(word zero rigiser)或者XZR(64位）</li>
+<li>Stack Register: 当 用作load/store 的base register时， 或者 一些算术指令中， r31提供当前的stack pointer     WSP或者 SP</li>
+</ul>
+</li>
+<li>PC寄存器 不能直接读写。用来指明当前程序执行的位置</li>
+<li>过程调用 链接寄存器(LR)  是 r30</li>
+<li>异常处理 有个 ELR系统寄存器</li>
+<li>PC不是通用寄存器的一部分，不能通过寄存器号 来引用，所以不能作为 算术指令的源地址或者目标地址。<br> 也不能作为 内存存取的 基础(base), 索引(index)或者传输（transfer)寄存器。<br> 能够读取PC寄存器内容的指令是PC相对寻 指令(ADR, ADRP, 常量加载， 直接跳转等指令)<br> 跳转和链接指令，将PC保存到链接寄存器(BL和BLR)<br> 能够修改PC的唯一的方式，使用 隐式的控制流指令（条件跳转，无条件跳转，异常生成，异常返回）<br> 值得注意的是：PC 被这些指令 读出来时，其值 就是 该指令所在的地址，而不像 A32和T32中，要加上4或者8的偏移（历史上的原因，两级流水<br> 向后两条指令，如果是16位长度的thumb指令， 那就是PC+4;32位长的arm指令，就是PC+8)</li>
+</ol>
+</li>
+</ol>
+<h2 id="内存数据存取"><a href="#内存数据存取" class="headerlink" title="内存数据存取"></a>内存数据存取</h2><p>A32和T32中的LDM,STM, PUSH和POP指令，在A64中并不存在<br>    又有一对新的指令LDP和 STP 用来从内存中存取数据到寄存器。<br>    地址生成:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ADRP  Xd, lable</div><div class="line">(Address Page)</div></pre></td></tr></table></figure>
+<p>符号扩展一个21位的offset,  向左移动12位<br>PC的值的低12位 清零，然后把这两者相加， 结果写入到Xd寄存器<br>用来得到一块含有 lable的4KB对齐 内存区域的base地址 （也就是说lable所在的地址，一定落在这个4KB的内存区域里,  指令助记符里Page也就是这个意思)， 可用来寻址 +/- 4GB的范围<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ADR X</div><div class="line">(Address)</div></pre></td></tr></table></figure></p>
+<p>将有符号的21位的偏移，加上PC, 结果写入到Xd寄存器<br>可用来计算 +/- 1MB范围的 任意字节粒度的有效地址</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS逆向/" rel="tag"># iOS逆向</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/09/通过tinyHttpd认识HTTP协议/" rel="next" title="通过tinyHttpd认识HTTP协议">
+                <i class="fa fa-chevron-left"></i> 通过tinyHttpd认识HTTP协议
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/18/系统调度能否达到微秒级/" rel="prev" title="系统调度能否达到微秒级">
+                系统调度能否达到微秒级 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/24/iOS逆向笔记/"
+           data-title="iOS逆向笔记" data-url="http://yoursite.com/2016/09/24/iOS逆向笔记/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="iCrack" />
+          <p class="site-author-name" itemprop="name">iCrack</p>
+          <p class="site-description motion-element" itemprop="description">个人学习、开发知识点等记录</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wangasi/" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/iCrack007/" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Crack007I/" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#逆向基础知识"><span class="nav-number">1.</span> <span class="nav-text">逆向基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用指令："><span class="nav-number">2.</span> <span class="nav-text">常用指令：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arm64汇编指令："><span class="nav-number">3.</span> <span class="nav-text">arm64汇编指令：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A64的新功能"><span class="nav-number">4.</span> <span class="nav-text">A64的新功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存数据存取"><span class="nav-number">5.</span> <span class="nav-text">内存数据存取</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iCrack</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangasi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

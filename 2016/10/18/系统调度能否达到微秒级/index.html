@@ -1,0 +1,755 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="iCrack's life" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="问题：usleep()函数号称自己是微秒级，你相信它真的能达到这么快吗？或者系统调度可以达到微秒级吗?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="系统调度能否达到微秒级">
+<meta property="og:url" content="http://yoursite.com/2016/10/18/系统调度能否达到微秒级/index.html">
+<meta property="og:site_name" content="iCrack's life">
+<meta property="og:description" content="问题：usleep()函数号称自己是微秒级，你相信它真的能达到这么快吗？或者系统调度可以达到微秒级吗?">
+<meta property="og:updated_time" content="2016-10-21T05:34:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="系统调度能否达到微秒级">
+<meta name="twitter:description" content="问题：usleep()函数号称自己是微秒级，你相信它真的能达到这么快吗？或者系统调度可以达到微秒级吗?">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '会飞的虫'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/18/系统调度能否达到微秒级/"/>
+
+
+
+
+
+  <title> 系统调度能否达到微秒级 | iCrack's life </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iCrack's life</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">正在输入....</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/18/系统调度能否达到微秒级/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="iCrack">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="iCrack's life">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="iCrack's life" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                系统调度能否达到微秒级
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-18T13:56:47+08:00">
+                2016-10-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/10/18/系统调度能否达到微秒级/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/18/系统调度能否达到微秒级/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>问题：usleep()函数号称自己是微秒级，你相信它真的能达到这么快吗？或者系统调度可以达到微秒级吗?</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="OS中常用的调度算法"><a href="#OS中常用的调度算法" class="headerlink" title="OS中常用的调度算法"></a>OS中常用的调度算法</h2><h5 id="一、常见的批处理作业调度算法"><a href="#一、常见的批处理作业调度算法" class="headerlink" title="一、常见的批处理作业调度算法"></a>一、常见的批处理作业调度算法</h5><ol>
+<li>先来先服务调度算法（FCFS）:就是按照各个作业进入系统的自然次序来调度作业。这种调度算法的优点是实现简单，公平。其缺点是没有考虑到系统中各种资源的综合使用情况，往往使短作业的用户不满意，因为短作业等待处理的时间可能比实际运行时间长得多。</li>
+<li>短作业优先调度算法(SPF): 就是优先调度并处理短作业，所谓短是指作业的运行时间短。而在作业未投入运行时，并不能知道它实际的运行时间的长短，因此需要用户在提交作业时同时提交作业运行时间的估计值。 </li>
+<li>最高响应比优先算法(HRN)：FCFS可能造成短作业用户不满，SPF可能使得长作业用户不满，于是提出HRN，选择响应比最高的作业运行。响应比=1+作业等待时间/作业处理时间。</li>
+<li>基于优先数调度算法(HPF)：每一个作业规定一个表示该作业优先级别的整数，当需要将新的作业由输入井调入内存处理时，优先选择优先数最高的作业。</li>
+<li>均衡调度算法，即多级队列调度算法</li>
+</ol>
+<p>基本概念：<br>   作业周转时间（Ti）＝完成时间(Tei)－提交时间(Tsi)<br>   作业平均周转时间(T)＝周转时间/作业个数<br>   作业带权周转时间（Wi）＝周转时间/运行时间<br>   响应比＝（等待时间＋运行时间）/运行时间</p>
+<h5 id="二、进程调度"><a href="#二、进程调度" class="headerlink" title="二、进程调度"></a>二、进程调度</h5><ol>
+<li>先进先出算法(FIFO)：按照进程进入就绪队列的先后次序来选择。即每当进入进程调度，总是把就绪队列的队首进程投入运行。</li>
+<li>时间片轮转算法(RR)：分时系统的一种调度算法。轮转的基本思想是，将CPU的处理时间划分成一个个的时间片，就绪队列中的进程轮流运行一个时间片。当时间片结束时，就强迫进程让出CPU，该进程进入就绪队列，等待下一次调度，同时，进程调度又去选择就绪队列中的一个进程，分配给它一个时间片，以投入运行。</li>
+<li>最高优先级算法(HPF)：进程调度每次将处理机分配给具有最高优先级的就绪进程。最高优先级算法可与不同的CPU方式结合形成可抢占式最高优先级算法和不可抢占式最高优先级算法。</li>
+<li>多级队列反馈法：几种调度算法的结合形式多级队列方式。</li>
+</ol>
+<h5 id="三、空闲分区分配算法"><a href="#三、空闲分区分配算法" class="headerlink" title="三、空闲分区分配算法"></a>三、空闲分区分配算法</h5><ol>
+<li>首先适应算法：当接到内存申请时，查找分区说明表，找到第一个满足申请长度的空闲区，将其分割并分配。此算法简单，可以快速做出分配决定。</li>
+<li>最佳适应算法：当接到内存申请时，查找分区说明表，找到第一个能满足申请长度的最小空闲区，将其进行分割并分配。此算法最节约空间，因为它尽量不分割到大的空闲区，其缺点是可能会形成很多很小的空闲分区，称为“碎片”。</li>
+<li>最坏适应算法：当接到内存申请时，查找分区说明表，找到能满足申请要求的最大的空闲区。该算法的优点是避免形成碎片，而缺点是分割了大的空闲区后，在遇到较大的程序申请内存时，无法满足的可能性较大。</li>
+</ol>
+<h5 id="四、虚拟页式存储管理中的页面置换算法"><a href="#四、虚拟页式存储管理中的页面置换算法" class="headerlink" title="四、虚拟页式存储管理中的页面置换算法"></a>四、虚拟页式存储管理中的页面置换算法</h5><ol>
+<li>理想页面置换算法(OPT)：这是一种理想的算法，在实际中不可能实现。该算法的思想是：发生缺页时，选择以后永不使用或在最长时间内不再被访问的内存页面予以淘汰。</li>
+<li>先进先出页面置换算法(FIFO)：选择最先进入内存的页面予以淘汰。</li>
+<li>最近最久未使用算法（LRU）：选择在最近一段时间内最久没有使用过的页，把它淘汰。</li>
+<li>最少使用算法（LFU）：选择到当前时间为止被访问次数最少的页转换。</li>
+</ol>
+<h5 id="五、磁盘调度"><a href="#五、磁盘调度" class="headerlink" title="五、磁盘调度"></a>五、磁盘调度</h5><ol>
+<li>先来先服务（FCFS）：是按请求访问者的先后次序启动磁盘驱动器，而不考虑它们要访问的物理位置</li>
+<li>最短寻道时间优先（SSTF）：让离当前磁道最近的请求访问者启动磁盘驱动器，即是让查找时间最短的那个作业先执行，而不考虑请求访问者到来的先后次序，这样就克服了先来先服务调度算法中磁臂移动过大的问题</li>
+<li>扫描算法（SCAN）或电梯调度算法：总是从磁臂当前位置开始，沿磁臂的移动方向去选择离当前磁臂最近的那个柱面的访问者。如果沿磁臂的方向无请求访问时，就改变磁臂的移动方向。在这种调度方法下磁臂的移动类似于电梯的调度，所以它也称为电梯调度算法。</li>
+<li>循环扫描算法（CSCAN）：循环扫描调度算法是在扫描算法的基础上改进的。磁臂改为单项移动，由外向里。当前位置开始沿磁臂的移动方向去选择离当前磁臂最近的哪个柱面的访问者。如果沿磁臂的方向无请求访问时，再回到最外，访问柱面号最小的作业请求。</li>
+</ol>
+<h2 id="linux下sleep与unsleep函数"><a href="#linux下sleep与unsleep函数" class="headerlink" title="linux下sleep与unsleep函数"></a>linux下sleep与unsleep函数</h2><p>1、sleep的精度是秒<br>2、unsleep的精度是微秒，不精确<br>3、select的精度是微秒，精确<br>4、nanosleep的精度是纳秒，不精确<br>5、unix、linux系统尽量不要使用unsleep和sleep，而应该使用nanosleep，使用nanosleep应注意判断返回值和错误代码，<br>    否则容易造成cpu占用率100%.<br>6、sleep/unsleep主要用途：均分cpu占用资源，变相降低当前进程优先级。</p>
+<blockquote>
+<p>参考文章：<a href="http://www.cppblog.com/kongque/archive/2011/01/18/138765.aspx" target="_blank" rel="external">http://www.cppblog.com/kongque/archive/2011/01/18/138765.aspx</a><br><a href="http://blog.csdn.NET/zjwoody/article/details/7882240" target="_blank" rel="external">http://blog.csdn.NET/zjwoody/article/details/7882240</a></p>
+</blockquote>
+<h2 id="cpu调度"><a href="#cpu调度" class="headerlink" title="cpu调度"></a>cpu调度</h2><p>CPU在执行任务时，是按时间周期来完成任务的，你所运行的任务有先后之分，CPU在一个时间周期内，能完成一次运算，也就是执行过程，在一次运算完成时，它已经处理了系统所有队列里的任务，CPU的频率越高，执行周期所用的时间越短，一般为100MHz到3GHz/s之间，当然也有更高的4GHz等等.. 所以是可以达到微妙级的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/24/iOS逆向笔记/" rel="next" title="iOS逆向笔记">
+                <i class="fa fa-chevron-left"></i> iOS逆向笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/18/系统调度能否达到微秒级/"
+           data-title="系统调度能否达到微秒级" data-url="http://yoursite.com/2016/10/18/系统调度能否达到微秒级/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="iCrack" />
+          <p class="site-author-name" itemprop="name">iCrack</p>
+          <p class="site-description motion-element" itemprop="description">个人学习、开发知识点等记录</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wangasi/" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/iCrack007/" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Crack007I/" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OS中常用的调度算法"><span class="nav-number">1.</span> <span class="nav-text">OS中常用的调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一、常见的批处理作业调度算法"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">一、常见的批处理作业调度算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二、进程调度"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">二、进程调度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三、空闲分区分配算法"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">三、空闲分区分配算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#四、虚拟页式存储管理中的页面置换算法"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">四、虚拟页式存储管理中的页面置换算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#五、磁盘调度"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">五、磁盘调度</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux下sleep与unsleep函数"><span class="nav-number">2.</span> <span class="nav-text">linux下sleep与unsleep函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpu调度"><span class="nav-number">3.</span> <span class="nav-text">cpu调度</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iCrack</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangasi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
